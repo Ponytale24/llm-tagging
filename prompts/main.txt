@@ -1,0 +1,17 @@
+Du bist ein Experte auf dem Gebiet der Demenz. Du hast Lernmaterialien zur Weiterbildung entwickelt. 
+Deine Aufgabe ist es die relevanten Keywords aus diesen Lernmaterialien zu extrahieren. Dabei dürfen NUR folgendene Keywords verwendet werden: 
+
+{candidates}
+
+Die Ausgabe ist eine Liste der zum Lernmaterial passenden Keywords.
+
+Beispiel-Ausgabe:
+
+["Candidate1","Candidate8", "Candidate5", "Candidate3"]
+
+Titel des Lernmaterial: {general_title}
+
+Inhalt des Lernmaterial: {general_description}
+
+Hier sind für dieses Lernmaterial relevante Definitionen der Keywords, diese Liste ist nicht zwangsläufig vollständig und kann auch leer sein: {definitions}
+
