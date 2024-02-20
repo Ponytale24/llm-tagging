@@ -1,0 +1,8 @@
+langchain==0.1.8
+python-dotenv==1.0.1
+tqdm==4.66.2
+langchain_openai==0.0.6
+langchain_together==0.0.2.post1
+transformers==4.37.2
+pandas== 2.2.0
+print-color==0.4.6

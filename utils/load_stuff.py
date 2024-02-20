@@ -11,7 +11,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 
 class Retriever():
-    def __init__(self, vectorstore_path="utils/definitions_db"):
+    def __init__(self):
         # load definitions vector store
         self.faiss_db = FAISS.load_local("utils/definitions_db", embeddings=OpenAIEmbeddings())
 

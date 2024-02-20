@@ -2,68 +2,56 @@
 
 ## General
 
-This repo can be used to extract keywords from documents using LLMs or embedding similarity (KeyBERT). It was used in PAPER-LINK. The prompts and models are tested with german documents, but could easily be adapted to other languages.
+This repo can be used to extract keywords from documents using LLMs or embedding similarity with FAISS. It was used in PAPER-LINK. The prompts and models are tested with german documents, but could easily be adapted to other languages.
 
-The `prompt.txt` contains the prompt to extract keywords, while the `candidates.txt` holds all candidate keywords.
+## Prerequisites
 
-## Usage
-
-### Prerequisites
-
-Install the project requirements with `conda`
+Install the project requirements from the `requirements.txt`with pip.
 
 Specify API Keys in a `.env` in the same directory as the `extract_keywords.py` like this:
 
 ```
-COHERE_API_KEY=<your-api-key>
 OPENAI_API_KEY=<your-api-key>
 TOGETHER_API_KEY=<your-api-key>
-
 ```
 
-Then run:
+## Usage
 
-```bash
-python extract_keywords.py
-```
+The `llm_tagging.py` contains the logic to run tagging with LLM (optionally with retrieval of definitions).
+
+We used a .csv-file to store the document contents, but you could any kind of document loader provided by Langchain. The code needs to be adjusted for this.
 
 It will try to extract keywords in a single LLM-call if the context length of the specified LLM is long enough to fit the entire text. If not it will divide the text into chunks, get keywords from each chunk and then filter out any duplicates. The results are stored in `results` with the current timestamp and the model used.
 
-Open the `extract_keywords.py`, go to line 25 and 27 and specify the model and documents you want to use.
+The `embedding_tagging.py` contains the logic to run tagging with only retrieval.
 
-## Metrics
+The `prompts` folder contains the prompt to extract keywords, while the `candidates.txt` holds all candidate keywords.
 
-Example Metrics:
+## Results
+
+Example result:
 
 ```json
-{
-  "iMINT_Computer_lernen.docx": {
-    "extraction_time": "0:00:00.571182",
-    "model": "keybert",
-    "chunked": false,
-    "keywords": []
-  },
-  "top_secret_urlaubsfotos.docx": {
-    "extraction_time": "0:00:00.362619",
-    "model": "keybert",
-    "chunked": false,
-    "keywords": ["wertsch\u00e4tzende kommunikation", "kommunikation", "angst"]
-  },
-  "Urlaubsbilder_mit_feedback.docx": {
-    "extraction_time": "0:00:00.338842",
-    "model": "keybert",
-    "chunked": false,
-    "keywords": ["symptome"]
-  }
-}
+"Document": {
+        "model": "gpt-3.5-turbo-0125",
+        "context_length": 16385,
+        "model_calls": 1,
+        "definitions": "a list of retrieved definitions with relevance",
+        "query_length": 2066,
+        "chunked": false,
+        "extraction_time (s)": "4",
+        "keywords": [
+          "keyword1",
+          "keyword4",
+          "keyword6",
+          "keyword7",
+          "keyword9",
+        ]
+    }
 ```
-
-The results contain the extraction time, the model used, an information about whether or not the document was chunked (fitted in model context window) and most importantly the keywords.
-These results can be viewed by running `streamlit run dashboard.py` from the terminal. The dashboard also gives a quick info which keywords were in the candidates.
 
 ## Models
 
-- [`gpt-4`](https://platform.openai.com/docs/models): Advanced model by OpenAi, used via API. You might need to previous payments of at least 1$ to enable access.
-- [`gpt-3.5-turbo-16k`](https://platform.openai.com/docs/models): The OpenAI model that is used in free ChatGPT
-- [`cohere`](https://docs.cohere.com/docs/models): Offers a free API but with quite low RateLimit
-- [`keybert`](https://maartengr.github.io/KeyBERT/)
+- [`gpt-3.5-turbo-0125`](https://platform.openai.com/docs/models): The OpenAI model that is used in free ChatGPT
+- [`WizardLM-13B-V1.2`](https://huggingface.co/WizardLM/WizardLM-13B-V1.2): Empowering Large Pre-Trained Language Models to Follow Complex Instructions, works quite well for german text
+- [`Mixtral-8x7B-Instruct-v0.1`](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1): is a pretrained generative Sparse Mixture of Experts. The Mixtral-8x7B outperforms Llama 2 70B on most benchmarks

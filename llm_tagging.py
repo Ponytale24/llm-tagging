@@ -19,7 +19,6 @@ from langchain.text_splitter import CharacterTextSplitter
 USE_ALL_MODELS = False
 USE_DEFINITIONS = False
 
-# TODO update to latest gpt-3.5
 available_llms = ["cohere", "gpt-3.5-turbo-0125", "gpt-4", "WizardLM/WizardLM-13B-V1.2", "mistralai/Mixtral-8x7B-Instruct-v0.1", "zero-one-ai/Yi-34B-Chat"]
 prompt_path = "prompts/main.txt"
 
