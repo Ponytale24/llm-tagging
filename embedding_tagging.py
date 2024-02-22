@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 prompt_path = "prompts/main.txt"
 
 # loading docs
-docs = load_metadata()
+docs = load_metadata(path="learning_object_metadata_first10.xlsx")
 # load candidates from txt
 candidates = load_candidates()
 

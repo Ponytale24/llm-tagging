@@ -17,7 +17,7 @@ from langchain.prompts import PromptTemplate
 from langchain.text_splitter import CharacterTextSplitter
 
 USE_ALL_MODELS = False
-USE_DEFINITIONS = False
+USE_DEFINITIONS = True
 
 available_llms = ["cohere", "gpt-3.5-turbo-0125", "gpt-4", "WizardLM/WizardLM-13B-V1.2", "mistralai/Mixtral-8x7B-Instruct-v0.1", "zero-one-ai/Yi-34B-Chat"]
 prompt_path = "prompts/main.txt"
@@ -29,7 +29,7 @@ else:
     models = ["gpt-3.5-turbo-0125","WizardLM/WizardLM-13B-V1.2", "mistralai/Mixtral-8x7B-Instruct-v0.1"] 
 
 # loading docs
-docs = load_metadata()
+docs = load_metadata(path="learning_object_metadata_first10.xlsx")
 # load candidates from txt
 candidates = load_candidates()
 

@@ -38,7 +38,10 @@ def load_docs(doc_path) -> list:
     return files
 
 def load_metadata(path="learning_object_metadata_LLMTagging.csv"):
-    df = pd.read_csv(path)
+    if path.endswith("xlsx"):
+        df = pd.read_excel(path)
+    if path.endswith("csv"):
+        df = pd.read_csv(path)
     df = df[["general_title_","general_description_"]]
     return df.values.tolist()
     
